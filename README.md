@@ -1,2 +1,2 @@
-# clever_tap
-Ruby gem providing access to the CleverTap API
+# clevertap-ruby
+Module providing access to the [CleverTap](https://clevertap.com/) API
