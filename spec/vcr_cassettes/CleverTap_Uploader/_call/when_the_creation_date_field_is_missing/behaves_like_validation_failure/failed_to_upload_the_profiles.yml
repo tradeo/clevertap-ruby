@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/upload
+    body:
+      encoding: UTF-8
+      string: '{"d":[{"identity":"22","ts":0,"type":"profile","profileData":{"id":22,"created_at":"2017-02-28
+        09:36:35 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"23","ts":0,"type":"profile","profileData":{"id":23,"created_at":"2017-02-28
+        09:36:35 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.11.0
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding, User-Agent
+      transfer-encoding:
+      - chunked
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "status" : "success" , "processed" : 0 , "unprocessed" : [ { "status"
+        : "fail" , "code" : 525 , "error" : "Timestamp should be present in the Unix
+        Epoch format. Skipped record number : 1" , "record" : "{ \"identity\" : \"22\"
+        , \"ts\" : 0 , \"type\" : \"profile\" , \"profileData\" : { \"id\" : 22 ,
+        \"created_at\" : \"2017-02-28 09:36:35 +0200\" , \"Name\" : \"John Rush\"
+        , \"Email\" : \"example@gmail.com\" , \"Gender\" : \"M\" , \"Phone\" : \"+35922333232\"
+        , \"Employed\" : \"Y\" , \"Education\" : \"Graduate\" , \"Married\" : \"Y\"
+        , \"Age\" : \"18\"}}"} , { "status" : "fail" , "code" : 525 , "error" : "Timestamp
+        should be present in the Unix Epoch format. Skipped record number : 2" , "record"
+        : "{ \"identity\" : \"23\" , \"ts\" : 0 , \"type\" : \"profile\" , \"profileData\"
+        : { \"id\" : 23 , \"created_at\" : \"2017-02-28 09:36:35 +0200\" , \"Name\"
+        : \"John Rush\" , \"Email\" : \"example@gmail.com\" , \"Gender\" : \"M\" ,
+        \"Phone\" : \"+35922333232\" , \"Employed\" : \"Y\" , \"Education\" : \"Graduate\"
+        , \"Married\" : \"Y\" , \"Age\" : \"18\"}}"}]}'
+    http_version: 
+  recorded_at: Tue, 28 Feb 2017 07:36:35 GMT
+recorded_with: VCR 3.0.3
