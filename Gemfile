@@ -4,8 +4,14 @@ gem 'faraday'
 gem 'json'
 
 group :test do
-  gem 'byebug'
   gem 'rspec'
   gem 'rubocop'
   gem 'vcr'
 end
+
+group :test, :development do
+  gem 'byebug'
+  gem 'pry'
+end
+
+gemspec
