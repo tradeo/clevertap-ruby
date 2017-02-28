@@ -1,0 +1,50 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.3.0)
+    byebug (9.0.6)
+    diff-lcs (1.3)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
+    json (2.0.3)
+    multipart-post (2.0.0)
+    parser (2.4.0.0)
+      ast (~> 2.2)
+    powerpack (0.1.1)
+    rainbow (2.2.1)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
+    rubocop (0.47.1)
+      parser (>= 2.3.3.1, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.1)
+    unicode-display_width (1.1.3)
+    vcr (3.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  byebug
+  faraday
+  json
+  rspec
+  rubocop
+  vcr
+
+BUNDLED WITH
+   1.14.3
