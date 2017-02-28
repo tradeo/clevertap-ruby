@@ -1,0 +1,42 @@
+################################## Style #######################################
+
+Style/FormatString:
+  EnforcedStyle: format
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IndentHash:
+  EnforcedStyle: consistent
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Style/EmptyCaseCondition:
+  Enabled: false
+
+################################## Metrics #####################################
+
+Metrics/AbcSize:
+  Max: 120
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 40
+
+Metrics/LineLength:
+  Max: 140
+
+Metrics/MethodLength:
+  Max: 70
+
+Metrics/ModuleLength:
+  Max: 200
+
+Metrics/PerceivedComplexity:
+  Max: 10
