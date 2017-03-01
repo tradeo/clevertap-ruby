@@ -26,6 +26,8 @@ module CleverTap
       FailedResponse.new(records: events, message: e.message)
     end
 
+    alias upload_events upload_event
+
     def upload_profile(profiles, **options)
       profiles = profiles.is_a?(Array) ? profiles : [profiles]
 
@@ -35,6 +37,8 @@ module CleverTap
     rescue Faraday::Error::TimeoutError, Faraday::Error::ClientError => e
       FailedResponse.new(records: profiles, message: e.message)
     end
+
+    alias upload_profiles upload_profile
 
     def client
       @client ||= Client.new(config[:account_id], config[:passcode])
