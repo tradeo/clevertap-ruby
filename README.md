@@ -62,6 +62,14 @@ timestamp when the event is originally created.
 The value should respond to `.to_i` and return epoch time. It's passed with key *ts*.
 If it's missing the default is the current the time stamp.
 
+### Send debug requests
+Passing parameter `debug: true` to upload methods you can test the data submitted is without errors.
+The record won't be actually persisted.
+
+```ruby
+  CleverTap.upload_profile(profile, debug: true)
+```
+
 ### Handle the response
 
 The CleverTap response object the folloing interface:
