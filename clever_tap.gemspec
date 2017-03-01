@@ -14,8 +14,6 @@ Gem::Specification.new do |spec|
   spec.description = 'Gem providing easy access to the CleverTap API'
   spec.files = Dir['lib/**/*', 'LICENSE.txt', 'Rakefile', 'README.md', 'Gemfile']
   spec.test_files = Dir['spec/**/*']
-  spec.executables = Dir['bin/**/*']
-  spec.bindir = 'bin'
   spec.require_paths = ['lib']
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
