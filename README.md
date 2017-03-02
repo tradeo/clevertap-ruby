@@ -5,7 +5,7 @@ Module providing access to the [CleverTap](https://clevertap.com/) API
 
 ### Configure the client
 
-You should add yours Account ID and Passcode for an authorization. You can get them from the settings in your CleverTap account.
+You should add your Account ID and Passcode for an authorization. You can get them from the settings in your CleverTap account.
 ```ruby
 ClieverTap.configure(account_id: 'your account ID', passcode: 'your passcode')
 ```
@@ -27,12 +27,12 @@ response.errors # => [ {  }, ...]
 ```
 
 The profile should always have an identity key as default its __id__ and
-it's always passed to to the CleverTap API as __identity__.
+it's always passed to the CleverTap API as __identity__.
 If your identity key is different then __id__ you can pass optional keyword parameter `identity_field: <name>`.
 
 If pass optional keyword `date_field: <name>` as to the CleverTap API will be passed
 timestamp when the profile is originally created.
-The value should respond to `.to_i` and return epoch time. It's passed with key *ts*.
+The value should respond to `.to_i` and return epoch time. It's passed with key __ts__.
 If it's missing the default is the current the time stamp.
 
 ### Upload an event
