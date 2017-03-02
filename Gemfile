@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'faraday'
+gem 'faraday', '>= 0.8', '~> 0.11.0'
 gem 'json'
 
 group :test do
-  gem 'rspec'
-  gem 'rubocop'
+  gem 'rspec', '>= 3.3'
+  gem 'rubocop', '~> 0.47.0'
   gem 'vcr'
 end
 

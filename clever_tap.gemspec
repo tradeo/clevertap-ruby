@@ -12,7 +12,8 @@ Gem::Specification.new do |spec|
   spec.homepage = 'https://github.com/tradeo/clevertap-ruby'
   spec.summary = 'CleverTap API client'
   spec.description = 'Gem providing easy access to the CleverTap API'
-  spec.files = Dir['lib/**/*', 'LICENSE.txt', 'Rakefile', 'README.md', 'Gemfile']
+
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }
   spec.test_files = Dir['spec/**/*']
   spec.require_paths = ['lib']
 
@@ -24,4 +25,10 @@ Gem::Specification.new do |spec|
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'
   end
+
+  spec.add_dependency 'faraday', '>= 0.8', '<= 0.11.0'
+  spec.add_dependency 'json'
+
+  spec.add_development_dependency 'bundler', '~> 1.14'
+  spec.add_development_dependency 'rake', '~> 10.0'
 end
