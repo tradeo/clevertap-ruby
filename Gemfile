@@ -10,8 +10,7 @@ group :test do
 end
 
 group :test, :development do
-  gem 'byebug'
-  gem 'pry'
+  gem 'pry-byebug'
 end
 
 gemspec
