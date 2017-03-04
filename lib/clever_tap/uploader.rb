@@ -11,23 +11,26 @@ module CleverTap
       TYPE_PROFILE => 'profileData'
     }.freeze
 
-    attr_reader :records, :type, :identity_field, :date_field, :event_name
+    attr_reader :records, :type, :identity_field, :date_field, :event_name, :dry_run
 
     # TODO: make defaults configurable
     # date_field should be a date object responding to `to_i` which
     # should returns epoch time
     # profile respond to .to_h
-    def initialize(records, identity_field: 'id', date_field: nil, event_name: nil)
+    def initialize(records, identity_field: 'id', date_field: nil, event_name: nil, dry_run: false)
       @type = event_name ? TYPE_EVENT : TYPE_PROFILE
       @records = records
 
       @identity_field = identity_field
       @date_field = date_field
       @event_name = event_name
+      @dry_run = dry_run
     end
 
     def call(client)
-      response = client.post(HTTP_PATH, build_request_body)
+      response = client.post(HTTP_PATH, build_request_body) do |request|
+        request.params.merge!(dryRun: 1) if dry_run
+      end
 
       parse_response(response)
     end
