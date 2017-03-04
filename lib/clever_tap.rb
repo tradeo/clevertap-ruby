@@ -1,58 +1,61 @@
 require 'json'
 
+require 'clever_tap/config'
 require 'clever_tap/client'
 require 'clever_tap/uploader'
 require 'clever_tap/successful_response'
 require 'clever_tap/failed_response'
 
 # the main module of the system
-module CleverTap
-  class << self
-    attr_accessor :config
+class CleverTap
+  attr_reader :config
 
-    # TODO: possibility for adding a logger
-    def configure(account_id:, passcode:, **rest)
-      @config ||= rest.merge(account_id: account_id, passcode: passcode).freeze
-    end
+  def initialize(**params)
+    @config = Config.new(params)
+    yield(@config) if block_given?
 
-    def upload_event(events, name:, identity_field:, **rest)
-      events = events.is_a?(Array) ? events : [events]
-      options = rest.merge(event_name: name, identity_field: identity_field)
+    @config.validate
+    @config.freeze
+  end
 
-      response = Uploader.new(events, options).call(client)
+  def client
+    @client ||= Client.new(config.account_id, config.passcode, &config.configure_faraday)
+  end
 
-      normalize_response(response, records: events)
-    rescue Faraday::Error::TimeoutError, Faraday::Error::ClientError => e
-      FailedResponse.new(records: events, message: e.message)
-    end
+  def upload_events(events, name:, identity_field:, **rest)
+    options = rest.merge(event_name: name, identity_field: identity_field)
 
-    alias upload_events upload_event
+    response = Uploader.new(events, options).call(client)
 
-    def upload_profile(profiles, **options)
-      profiles = profiles.is_a?(Array) ? profiles : [profiles]
+    normalize_response(response, records: events)
+  rescue Faraday::Error::TimeoutError, Faraday::Error::ClientError => e
+    FailedResponse.new(records: events, message: e.message)
+  end
 
-      response = Uploader.new(profiles, **options).call(client)
+  def upload_event(event, **options)
+    upload_events([event], options)
+  end
 
-      normalize_response(response, records: profiles)
-    rescue Faraday::Error::TimeoutError, Faraday::Error::ClientError => e
-      FailedResponse.new(records: profiles, message: e.message)
-    end
+  def upload_profiles(profiles, **options)
+    response = Uploader.new(profiles, **options).call(client)
 
-    alias upload_profiles upload_profile
+    normalize_response(response, records: profiles)
+  rescue Faraday::Error::TimeoutError, Faraday::Error::ClientError => e
+    FailedResponse.new(records: profiles, message: e.message)
+  end
 
-    def client
-      @client ||= Client.new(config[:account_id], config[:passcode])
-    end
+  def upload_profile(profile, **options)
+    upload_profiles([profile], options)
+  end
 
-    private
+  private
 
-    def normalize_response(response, records:)
-      # TODO: handle JSON::ParserError
-      if response.success?
-        SuccessfulResponse.new(JSON.parse(response.body))
-      else
-        FailedResponse.new(records: records, code: response.status, message: response.body)
-      end
+  def normalize_response(response, records:)
+    # TODO: handle JSON::ParserError
+    if response.success?
+      SuccessfulResponse.new(JSON.parse(response.body))
+    else
+      FailedResponse.new(records: records, code: response.status, message: response.body)
     end
   end
 end

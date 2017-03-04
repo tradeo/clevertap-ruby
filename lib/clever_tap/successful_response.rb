@@ -1,4 +1,4 @@
-module CleverTap
+class CleverTap
   # Normalize the success response data to one interface with the failure one
   class SuccessfulResponse
     attr_reader :raw_response, :unprocessed, :message, :code

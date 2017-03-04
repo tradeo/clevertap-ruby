@@ -7,8 +7,9 @@ Module providing access to the [CleverTap](https://clevertap.com/) API
 
 You should add your Account ID and Passcode for an authorization. You can get them from the settings in your CleverTap account.
 ```ruby
-ClieverTap.configure(account_id: 'your account ID', passcode: 'your passcode')
+CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
 ```
+
 ### Upload a profile
 Pass a object that responds to `.to_h` and `[]` to `.upload_profile`.
 The result will be a CleverTap response object.
@@ -19,7 +20,8 @@ profile = {
   'Name' => 'Jonh Bravo'
 }
 
-response = CleverTap.upload_profile(profile)
+client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
+response = client.upload_profile(profile)
 
 response.success # => true / false
 response.status # => 'success' / 'partial' / 'fail'
@@ -48,7 +50,8 @@ event = {
   'Cookie ID' => '424242'
 }
 
-response = CleverTap.upload_event(event, name: 'registration', identity_field: 'User ID')
+client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
+response = client.upload_event(event, name: 'registration', identity_field: 'User ID')
 
 response.success # => true / false
 response.status # => 'success' / 'partial' / 'fail'
@@ -67,7 +70,8 @@ Passing parameter `dry_run: true` to upload methods you can test the data submit
 The record won't be persisted.
 
 ```ruby
-  CleverTap.upload_profile(profile, dry_run: true)
+  client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
+  client.upload_profile(profile, debug: true)
 ```
 
 ### Handle the response

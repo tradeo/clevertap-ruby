@@ -1,4 +1,4 @@
-module CleverTap
+class CleverTap
   # unit uploading profile data to CleverTap
   class Uploader
     HTTP_PATH = 'upload'.freeze

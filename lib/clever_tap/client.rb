@@ -1,6 +1,6 @@
 require 'faraday'
 
-module CleverTap
+class CleverTap
   # Thin wrapper around Faraday, setting URL and headers
   class Client
     DOMAIN = 'https://api.clevertap.com'.freeze
@@ -9,17 +9,22 @@ module CleverTap
     ACCOUNT_HEADER = 'X-CleverTap-Account-Id'.freeze
     PASSCODE_HEADER = 'X-CleverTap-Passcode'.freeze
 
-    attr_accessor :account_id, :passcode
+    attr_accessor :account_id, :passcode, :configure
 
-    def initialize(account_id, passcode)
+    def initialize(account_id, passcode, &configure)
       @account_id = account_id || raise('Clever Tap `account_id` missing')
       @passcode = passcode || raise('Clever Tap `passcode` missing')
+      @configure = configure || proc {}
     end
 
     def connection
       # TODO: pass the config to a block
       @connection ||= Faraday.new("#{DOMAIN}/#{API_VERSION}") do |config|
-        config.adapter :net_http
+        configure.call(config)
+
+        # NOTE: set adapter only if there isn't one set
+        config.adapter :net_http if config.builder.handlers.empty?
+
         config.headers['Content-Type'] = 'application/json'
         config.headers[ACCOUNT_HEADER] = account_id
         config.headers[PASSCODE_HEADER] = passcode
