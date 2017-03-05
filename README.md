@@ -10,6 +10,20 @@ You should add your Account ID and Passcode for an authorization. You can get th
 CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
 ```
 
+You can add configuration settings as parameters like above or using a block.
+
+```ruby
+CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>') do |config|
+  config.configure_faraday do |faraday_config|
+    faraday_config.adapter :httpclient
+  end
+
+  config.profile_identity_field = 'ID'
+  config.event_identity_field = 'User ID'
+  config.event_identity_field_for 'deposit', 'Account ID'
+end
+```
+
 ### Upload a profile
 Pass a object that responds to `.to_h` and `[]` to `.upload_profile`.
 The result will be a CleverTap response object.
