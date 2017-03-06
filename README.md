@@ -1,19 +1,31 @@
-# clevertap-ruby
+clevertap-ruby
+==============
+
 Module providing access to the [CleverTap](https://clevertap.com/) API
+
+## Install
+Add to your Gemfile
+
+```ruby
+gem 'clever_tap', github: 'tradeo/clevertap-ruby'
+```
 
 ## Usage
 
 ### Configure the client
 
-You should add your Account ID and Passcode for an authorization. You can get them from the settings in your CleverTap account.
+Create an instance of `CleverTap` object:
 ```ruby
 CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
 ```
 
-You can add configuration settings as parameters like above or using a block.
+You can add configuration settings as parameters like above and/or using a block. `account_id` and `passcode` are mandatory !
 
 ```ruby
-CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>') do |config|
+CLEVER_TAP = CleverTap.new do |config|
+  config.account_id = '<your account ID>'
+  config.passcode = '<your passcode>'
+
   config.configure_faraday do |faraday_config|
     faraday_config.adapter :httpclient
   end
@@ -25,13 +37,12 @@ end
 ```
 
 ### Upload a profile
-Pass a object that responds to `.to_h` and `[]` to `.upload_profile`.
-The result will be a CleverTap response object.
 
+`.upload_profile` accepts as a first argument an object responding to `#to_h` and `#[]`.
 ```ruby
 profile = {
-  'id' => '666',
-  'Name' => 'Jonh Bravo'
+  'identity' => '666',
+  'Name' => 'John Bravo'
 }
 
 client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
@@ -42,21 +53,20 @@ response.status # => 'success' / 'partial' / 'fail'
 response.errors # => [ {  }, ...]
 ```
 
-The profile should always have an identity key as default its __id__ and
-it's always passed to the CleverTap API as __identity__.
-If your identity key is different then __id__ you can pass optional keyword parameter `identity_field: <name>`.
+__Identity field__ will be required in each profile object.
+The default identity field name is __"identity"__.
+You can change it as set to the `config.profile_identity_field`.
+With passing keyword argument `identity_field: <name>` you can customize it further.
 
-If pass optional keyword `date_field: <name>` as to the CleverTap API will be passed
-timestamp when the profile is originally created.
-The value should respond to `.to_i` and return epoch time. It's passed with key __ts__.
-If it's missing the default is the current the time stamp.
+__Date field__ used as a timestamp is optional.
+If it's missing the current time stamp will be send instead.
+The value should respond to `.to_i` and return epoch time.
+The name of the field is configurable similarly as the identity field
 
 ### Upload an event
 
-Pass a object that responds to `.to_h` and `[]` to `.upload_event` and an event name.
-The name can be any string.
-The result will be a CleverTap response object.
 
+`.upload_event` accepts as a first argument an object responding to `#to_h` and `#[]` and a second parameter keyword argument `name: <name>`.
 ```ruby
 event = {
   'User ID' => '666',
@@ -72,30 +82,24 @@ response.status # => 'success' / 'partial' / 'fail'
 response.errors # => [ {  }, ...]
 ```
 
-Passing `identity_field` to the `upload_event` is mandatory!
-
-If pass an optional keyword `date_field: <name>` as to the CleverTap API will be passed
-timestamp when the event is originally created.
-The value should respond to `.to_i` and return epoch time. It's passed with key *ts*.
-If it's missing the default is the current the time stamp.
-
 ### Send requests as *Dry Run*
+
 Passing parameter `dry_run: true` to upload methods you can test the data submitted for a validation errors.
 The record won't be persisted.
 
 ```ruby
   client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
-  client.upload_profile(profile, debug: true)
+  client.upload_profile(profile, dry_run: true)
 ```
 
 ### Handle the response
 
-The CleverTap response object the folloing interface:
-  1. `.status` - __success__ / __partial__ / __fail__
-  2. `.success` - __true__ when is the status is __success__ and __false__ otherwise
-  3. `.errors` - it's actually a the value behind key `unprocessed` returned when the request is successful(code 200), but will contains the failed records even when the code is different than 200.
-  4. `.code` - codes from 200-500. When it's __200__, errors can contains a validation
-   errors codes. When it's __-1__ the error is custom and more info can be found in the message. More info about the codes can find [CleverTap Docs](https://support.clevertap.com/docs/api/working-with-user-profiles.html#uploading-user-profiles)
+The CleverTap response object has the following interface:
+  1. `#status` - __"success"__ / __"partial"__ / __"fail"__
+  2. `#success` - `true` when is the status is __"success"__ and `false` otherwise
+  3. `#errors` - it's actually `unprocessed` synonym returned when the request is successful(code 200), but will contains the failed records even when the code is different than 200.
+  4. `#code` - codes from 200-500. When it's __200__, errors can contains a validation
+   error codes. When it's __-1__ the error is custom and more info can be found in the message. More info about the codes can find [CleverTap Docs](https://support.clevertap.com/docs/api/working-with-user-profiles.html#uploading-user-profiles)
 
 
 
