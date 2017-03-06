@@ -17,7 +17,7 @@ class CleverTap
     # date_field should be a date object responding to `to_i` which
     # should returns epoch time
     # profile respond to .to_h
-    def initialize(records, identity_field: 'id', date_field: nil, event_name: nil, dry_run: false)
+    def initialize(records, identity_field:, date_field: nil, event_name: nil, dry_run: false)
       @type = event_name ? TYPE_EVENT : TYPE_PROFILE
       @records = records
 
@@ -47,7 +47,7 @@ class CleverTap
       ts = date_field ? record[date_field] : Time.now
 
       {
-        'identity' => record[identity_field].to_s,
+        'identity' => pluck_identity(record).to_s,
         'ts' => ts.to_i,
         'type' => type,
         ENTITY_DATA_NAMES[type] => record.to_h
@@ -58,6 +58,15 @@ class CleverTap
 
     def parse_response(http_response)
       http_response
+    end
+
+    def pluck_identity(record)
+      # TODO: symbolize record keys
+      identity = record[identity_field.to_s] || record[identity_field.to_sym]
+
+      raise "Missing identity field with name: '#{identity_field}' for #{record}" unless identity
+
+      identity
     end
   end
 end

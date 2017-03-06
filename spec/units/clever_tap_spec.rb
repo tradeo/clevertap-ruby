@@ -7,6 +7,7 @@ RSpec.describe CleverTap do
         subject(:clever_tap) do
           CleverTap.new(account_id: 'foo',
                         passcode: 'passcode',
+                        identity_field: 'ID',
                         configure_faraday: configure_faraday)
         end
 
@@ -14,6 +15,7 @@ RSpec.describe CleverTap do
 
         it('persist the account_id') { expect(clever_tap.config.account_id).to eq('foo') }
         it('persist the passcode') { expect(clever_tap.config.passcode).to eq('passcode') }
+        it('persist the identity field') { expect(clever_tap.config.identity_field).to eq('ID') }
         it('persist the faraday config') { expect(clever_tap.config.configure_faraday).to eq(configure_faraday) }
       end
 
@@ -22,6 +24,7 @@ RSpec.describe CleverTap do
           CleverTap.new do |config|
             config.account_id = 'foo'
             config.passcode = 'passcode'
+            config.identity_field = 'ID'
             config.configure_faraday(&configure_faraday)
           end
         end
@@ -30,6 +33,7 @@ RSpec.describe CleverTap do
 
         it('persist the account_id') { expect(clever_tap.config.account_id).to eq('foo') }
         it('persist the passcode') { expect(clever_tap.config.passcode).to eq('passcode') }
+        it('persist the identity field') { expect(clever_tap.config.identity_field).to eq('ID') }
         it('persist the faraday config') { expect(clever_tap.config.configure_faraday).to eq(configure_faraday) }
       end
     end

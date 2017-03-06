@@ -19,14 +19,15 @@ Create an instance of `CleverTap` object:
 CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
 ```
 
-You can add configuration settings as parameters like above and/or using a block. `account_id` and `passcode` are mandatory!
+You can add configuration settings as parameters like above and/or using a block.
 ```ruby
 CLEVER_TAP = CleverTap.new do |config|
-  config.account_id = '<your account ID>'
-  config.passcode = '<your passcode>'
+  config.account_id = '<your account ID>' # mandatory
+  config.passcode = '<your passcode>' # mandatory
+  config.identity_field = 'ID' # default value "identity"
 
-  config.configure_faraday do |faraday_config|
-    faraday_config.adapter :httpclient
+  config.configure_faraday do |faraday_config| # optional
+    faraday_config.adapter :httpclient # default adapter "net_http"
   end
 end
 ```
@@ -48,15 +49,9 @@ response.status # => 'success' / 'partial' / 'fail'
 response.errors # => [ {  }, ...]
 ```
 
-__Identity field__ will be required in each profile object.
-The default identity field name is __"identity"__.
-You can change it as set to the `config.profile_identity_field`.
-With passing keyword argument `identity_field: <name>` you can customize it further.
-
-__Date field__ used as a timestamp is optional.
+__Date field__ used as a time stamp is optional.
 If it's missing the current time stamp will be send instead.
 The value should respond to `.to_i` and return epoch time.
-The name of the field is configurable similarly as the identity field
 
 ### Upload an event
 
@@ -64,13 +59,13 @@ The name of the field is configurable similarly as the identity field
 `.upload_event` accepts as a first argument an object responding to `#to_h` and `#[]` and a second parameter keyword argument `name: <name>`.
 ```ruby
 event = {
-  'User ID' => '666',
+  'identity' => '666',
   'Name' => 'Jonh Bravo',
   'Cookie ID' => '424242'
 }
 
 client = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
-response = client.upload_event(event, name: 'registration', identity_field: 'User ID')
+response = client.upload_event(event, name: 'registration')
 
 response.success # => true / false
 response.status # => 'success' / 'partial' / 'fail'

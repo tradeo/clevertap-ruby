@@ -5,8 +5,9 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":"3","ts":1488267392,"type":"profile","profileData":{"id":3,"created_at":"2017-02-28
-        09:36:32 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"","ts":1488267392,"type":"profile","profileData":{}}]}'
+      string: '{"d":[{"identity":"3","ts":1488816983,"type":"profile","profileData":{"identity":3,"created_at":"2017-03-06
+        18:16:23 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"4","ts":1488816983,"type":"profile","profileData":{"identity":4,"created_at":"2017-03-06
+        18:16:23 +0200","Name":"John Rush","Email":"$$$$$","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
     headers:
       Content-Type:
       - application/json
@@ -25,17 +26,20 @@ http_interactions:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding, User-Agent
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '320'
       connection:
       - Close
     body:
       encoding: ASCII-8BIT
       string: '{ "status" : "success" , "processed" : 1 , "unprocessed" : [ { "status"
-        : "fail" , "code" : 523 , "error" : "''identity'' or ''fbId'' or ''gpId''
-        or ''objectId'' is necessary under 120 chars to identify the user. Skipped
-        record number : 2" , "record" : "{ \"identity\" : \"\" , \"ts\" : 1488267392
-        , \"type\" : \"profile\" , \"profileData\" : { }}"}]}'
+        : "fail" , "code" : 515 , "error" : "Profile data is incorrect. Email is not
+        valid.Skipped record number : 2" , "record" : "{ \"identity\" : \"4\" , \"ts\"
+        : 1488816983 , \"type\" : \"profile\" , \"profileData\" : { \"identity\" :
+        4 , \"created_at\" : \"2017-03-06 18:16:23 +0200\" , \"Name\" : \"John Rush\"
+        , \"Email\" : \"$$$$$\" , \"Gender\" : \"M\" , \"Phone\" : \"+35922333232\"
+        , \"Employed\" : \"Y\" , \"Education\" : \"Graduate\" , \"Married\" : \"Y\"
+        , \"Age\" : \"18\"}}"}]}'
     http_version: 
-  recorded_at: Tue, 28 Feb 2017 07:36:32 GMT
+  recorded_at: Mon, 06 Mar 2017 16:16:23 GMT
 recorded_with: VCR 3.0.3

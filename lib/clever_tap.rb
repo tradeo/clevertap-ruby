@@ -22,8 +22,8 @@ class CleverTap
     @client ||= Client.new(config.account_id, config.passcode, &config.configure_faraday)
   end
 
-  def upload_events(events, name:, identity_field:, **rest)
-    options = rest.merge(event_name: name, identity_field: identity_field)
+  def upload_events(events, name:, **rest)
+    options = rest.merge(event_name: name, identity_field: config.identity_field)
 
     response = Uploader.new(events, options).call(client)
 
@@ -37,6 +37,7 @@ class CleverTap
   end
 
   def upload_profiles(profiles, **options)
+    options = options.merge(identity_field: config.identity_field)
     response = Uploader.new(profiles, **options).call(client)
 
     normalize_response(response, records: profiles)
