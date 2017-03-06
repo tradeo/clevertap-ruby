@@ -10,7 +10,7 @@ class Profile
 
   def self.build_valid(extra = {})
     new({
-      'id' => store[:id] += 1,
+      'identity' => store[:id] += 1,
       'created_at' => Time.new,
       'Name' => 'John Rush',
       'Email' => 'example@gmail.com',

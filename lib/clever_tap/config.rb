@@ -1,37 +1,20 @@
 class CleverTap
   # CleverTap instance's config store object
   class Config
-    PROFILE_IDENTITY_FIELD_DEFAULT = 'identity'.freeze
-    EVENT_IDENTITY_FIELD_DEFALT = 'identity'.freeze
+    DEFAULT_IDENTITY_FIELD = 'identity'.freeze
 
-    attr_accessor :account_id, :passcode,
-                  :profile_identity_field, :profile_date_field,
-                  :event_identity_field
+    attr_accessor :account_id, :passcode, :identity_field
 
     def initialize(**config)
       @account_id = config[:account_id]
       @passcode = config[:passcode]
+      @identity_field = config[:identity_field] || DEFAULT_IDENTITY_FIELD
       @configure_faraday = config[:configure_faraday]
-
-      @profile_identity_field = config[:profile_identity_field] || PROFILE_IDENTITY_FIELD_DEFAULT
-      @profile_date_field = config[:profile_date_field]
-
-      @event_identity_field = config[:event_identity_field] || EVENT_IDENTITY_FIELD_DEFALT
-      @events_identity_fields = config[:events_identity_fields] || {}
     end
 
-    # NOTE: reader or writer depending if the block is present
+    # NOTE: reader or writer depending if the block is given
     def configure_faraday(&block)
       block ? @configure_faraday = block : @configure_faraday
-    end
-
-    # NOTE: reader or writer depending if the value is present
-    def event_identity_field_for(type, value = nil)
-      if value
-        @events_identity_fields[type] = value
-      else
-        @events_identity_fields[type] || event_identity_field
-      end
     end
 
     def validate

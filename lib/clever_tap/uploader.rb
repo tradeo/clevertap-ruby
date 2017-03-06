@@ -44,11 +44,10 @@ class CleverTap
     end
 
     def normalize_record(record)
-      identity = record[identity_field.to_s] || record[identity_field.to_sym]
-      ts = (date_field ? record[date_field.to_s] || record[date_field.to_sym] : Time.now)
+      ts = date_field ? record[date_field] : Time.now
 
       {
-        'identity' => identity.to_s,
+        'identity' => pluck_identity(record).to_s,
         'ts' => ts.to_i,
         'type' => type,
         ENTITY_DATA_NAMES[type] => record.to_h
@@ -59,6 +58,15 @@ class CleverTap
 
     def parse_response(http_response)
       http_response
+    end
+
+    def pluck_identity(record)
+      # TODO: symbolize record keys
+      identity = record[identity_field.to_s] || record[identity_field.to_sym]
+
+      raise "Missing identity field with name: '#{identity_field}' for #{record}" unless identity
+
+      identity
     end
   end
 end
