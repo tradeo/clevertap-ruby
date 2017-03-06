@@ -2,11 +2,7 @@ require 'spec_helper'
 
 RSpec.describe 'Clever Tap integration', vcr: true do
   # NOTE: clear mutations in CleverTap config
-  subject(:clever_tap) do
-    CleverTap.new(account_id: AUTH_ACCOUNT_ID, passcode: AUTH_PASSCODE) do |config|
-      config.profile_identity_field = 'id'
-    end
-  end
+  subject(:clever_tap) { CleverTap.new(account_id: AUTH_ACCOUNT_ID, passcode: AUTH_PASSCODE) }
 
   describe 'uploading a profile' do
     context 'when is valid' do
@@ -38,7 +34,7 @@ RSpec.describe 'Clever Tap integration', vcr: true do
     end
   end
 
-  describe 'uploading many profiles' do
+  describe 'uploading a many profiles' do
     context 'when only some are valid' do
       let(:profiles) { [Profile.build_valid, Profile.new] }
 
@@ -73,33 +69,6 @@ RSpec.describe 'Clever Tap integration', vcr: true do
         aggregate_failures do
           expect(response.status).to eq('success')
           expect(response.errors).to be_empty
-        end
-      end
-    end
-
-    context 'when is invalid' do
-      context 'with missing identity field' do
-        subject(:clever_tap) do
-          CleverTap.new(account_id: AUTH_ACCOUNT_ID, passcode: AUTH_PASSCODE) do |config|
-            config.event_identity_field = 'User ID'
-            config.event_identity_field_for 'register', 'ID'
-          end
-        end
-
-        let(:event) do
-          {
-            'User ID' => 555,
-            'mobile' => true
-          }
-        end
-
-        it do
-          response = clever_tap.upload_event(event, name: 'register')
-
-          aggregate_failures do
-            expect(response.status).to eq('fail')
-            expect(response.errors).not_to be_empty
-          end
         end
       end
     end

@@ -5,9 +5,9 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":"18","ts":1488804870,"type":"profile","profileData":{"id":18,"created_at":"2017-03-06
-        14:54:30 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"aa"}},{"identity":"19","ts":1488804870,"type":"profile","profileData":{"id":19,"created_at":"2017-03-06
-        14:54:30 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"aa"}}]}'
+      string: '{"d":[{"identity":"18","ts":1488267394,"type":"profile","profileData":{"id":18,"created_at":"2017-02-28
+        09:36:34 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"aa"}},{"identity":"19","ts":1488267394,"type":"profile","profileData":{"id":19,"created_at":"2017-02-28
+        09:36:34 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"aa"}}]}'
     headers:
       Content-Type:
       - application/json
@@ -26,25 +26,25 @@ http_interactions:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding, User-Agent
-      content-length:
-      - '347'
+      transfer-encoding:
+      - chunked
       connection:
       - Close
     body:
       encoding: ASCII-8BIT
       string: '{ "status" : "success" , "processed" : 0 , "unprocessed" : [ { "status"
         : "fail" , "code" : 520 , "error" : "Profile data is incorrect. Age is invalid.Skipped
-        record number : 1" , "record" : "{ \"identity\" : \"18\" , \"ts\" : 1488804870
+        record number : 1" , "record" : "{ \"identity\" : \"18\" , \"ts\" : 1488267394
         , \"type\" : \"profile\" , \"profileData\" : { \"id\" : 18 , \"created_at\"
-        : \"2017-03-06 14:54:30 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"example@gmail.com\"
+        : \"2017-02-28 09:36:34 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"example@gmail.com\"
         , \"Gender\" : \"M\" , \"Phone\" : 35922333232 , \"Employed\" : \"Y\" , \"Education\"
         : \"Graduate\" , \"Married\" : \"Y\" , \"Age\" : \"aa\"}}"} , { "status" :
         "fail" , "code" : 520 , "error" : "Profile data is incorrect. Age is invalid.Skipped
-        record number : 2" , "record" : "{ \"identity\" : \"19\" , \"ts\" : 1488804870
+        record number : 2" , "record" : "{ \"identity\" : \"19\" , \"ts\" : 1488267394
         , \"type\" : \"profile\" , \"profileData\" : { \"id\" : 19 , \"created_at\"
-        : \"2017-03-06 14:54:30 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"example@gmail.com\"
+        : \"2017-02-28 09:36:34 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"example@gmail.com\"
         , \"Gender\" : \"M\" , \"Phone\" : 35922333232 , \"Employed\" : \"Y\" , \"Education\"
         : \"Graduate\" , \"Married\" : \"Y\" , \"Age\" : \"aa\"}}"}]}'
     http_version: 
-  recorded_at: Mon, 06 Mar 2017 12:54:30 GMT
+  recorded_at: Tue, 28 Feb 2017 07:36:35 GMT
 recorded_with: VCR 3.0.3

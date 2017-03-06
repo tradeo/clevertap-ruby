@@ -17,7 +17,7 @@ class CleverTap
     # date_field should be a date object responding to `to_i` which
     # should returns epoch time
     # profile respond to .to_h
-    def initialize(records, identity_field:, date_field: nil, event_name: nil, dry_run: false)
+    def initialize(records, identity_field: 'id', date_field: nil, event_name: nil, dry_run: false)
       @type = event_name ? TYPE_EVENT : TYPE_PROFILE
       @records = records
 
@@ -44,11 +44,10 @@ class CleverTap
     end
 
     def normalize_record(record)
-      identity = record[identity_field.to_s] || record[identity_field.to_sym]
-      ts = (date_field ? record[date_field.to_s] || record[date_field.to_sym] : Time.now)
+      ts = date_field ? record[date_field] : Time.now
 
       {
-        'identity' => identity.to_s,
+        'identity' => record[identity_field].to_s,
         'ts' => ts.to_i,
         'type' => type,
         ENTITY_DATA_NAMES[type] => record.to_h

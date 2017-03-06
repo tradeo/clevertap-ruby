@@ -19,8 +19,7 @@ Create an instance of `CleverTap` object:
 CLEVER_TAP = CleverTap.new(account_id: '<your account ID>', passcode: '<your passcode>')
 ```
 
-You can add configuration settings as parameters like above and/or using a block. `account_id` and `passcode` are mandatory !
-
+You can add configuration settings as parameters like above and/or using a block. `account_id` and `passcode` are mandatory!
 ```ruby
 CLEVER_TAP = CleverTap.new do |config|
   config.account_id = '<your account ID>'
@@ -29,10 +28,6 @@ CLEVER_TAP = CleverTap.new do |config|
   config.configure_faraday do |faraday_config|
     faraday_config.adapter :httpclient
   end
-
-  config.profile_identity_field = 'ID'
-  config.event_identity_field = 'User ID'
-  config.event_identity_field_for 'deposit', 'Account ID'
 end
 ```
 
