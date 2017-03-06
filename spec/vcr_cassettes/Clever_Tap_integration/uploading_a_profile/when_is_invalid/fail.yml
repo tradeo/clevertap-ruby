@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":"2","ts":1488267391,"type":"profile","profileData":{"id":2,"created_at":"2017-02-28
-        09:36:31 +0200","Name":"John Rush","Email":"$$$$$","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
+      string: '{"d":[{"identity":"2","ts":1488804867,"type":"profile","profileData":{"id":2,"created_at":"2017-03-06
+        14:54:27 +0200","Name":"John Rush","Email":"$$$$$","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
     headers:
       Content-Type:
       - application/json
@@ -34,10 +34,10 @@ http_interactions:
       string: '{ "status" : "success" , "processed" : 0 , "unprocessed" : [ { "status"
         : "fail" , "code" : 515 , "error" : "Profile data is incorrect. Email is not
         valid.Skipped record number : 1" , "record" : "{ \"identity\" : \"2\" , \"ts\"
-        : 1488267391 , \"type\" : \"profile\" , \"profileData\" : { \"id\" : 2 , \"created_at\"
-        : \"2017-02-28 09:36:31 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"$$$$$\"
+        : 1488804867 , \"type\" : \"profile\" , \"profileData\" : { \"id\" : 2 , \"created_at\"
+        : \"2017-03-06 14:54:27 +0200\" , \"Name\" : \"John Rush\" , \"Email\" : \"$$$$$\"
         , \"Gender\" : \"M\" , \"Phone\" : \"+35922333232\" , \"Employed\" : \"Y\"
         , \"Education\" : \"Graduate\" , \"Married\" : \"Y\" , \"Age\" : \"18\"}}"}]}'
     http_version: 
-  recorded_at: Tue, 28 Feb 2017 07:36:32 GMT
+  recorded_at: Mon, 06 Mar 2017 12:54:27 GMT
 recorded_with: VCR 3.0.3

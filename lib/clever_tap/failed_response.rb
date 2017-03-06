@@ -1,4 +1,4 @@
-module CleverTap
+class CleverTap
   # Introduce unified interface as the `SuccessfulResponse`
   class FailedResponse
     FAIL_STATUS = 'fail'.freeze

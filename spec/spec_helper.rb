@@ -6,6 +6,7 @@ require 'vcr'
 require 'vcr_config'
 
 require 'factories/profile'
+require 'pry-byebug'
 
 # Use for recording VCR cassettes
 AUTH_ACCOUNT_ID = ENV['CLEVER_TAP_ACCOUNT_ID'] || 'fake-id'

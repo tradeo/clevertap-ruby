@@ -26,7 +26,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'with valid data' do
       let(:profiles) { [Profile.build_valid, Profile.build_valid] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it 'makes successful upload' do
         result = subject.call(client)
@@ -42,7 +42,7 @@ describe CleverTap::Uploader, vcr: true do
 
     context 'when the gender is invalid' do
       let(:profiles) { [Profile.build_valid('Gender' => 'GG'), Profile.build_valid('Gender' => 'GG')] }
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 514
     end
@@ -50,7 +50,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when email is invalid' do
       let(:profiles) { [Profile.build_valid('Email' => '1234'), Profile.build_valid('Email' => '1234')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 515
     end
@@ -58,7 +58,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when phone is invalid' do
       let(:profiles) { [Profile.build_valid('Phone' => '223'), Profile.build_valid('Phone' => '123')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 516
     end
@@ -66,7 +66,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when employment status is invalid' do
       let(:profiles) { [Profile.build_valid('Employed' => '223'), Profile.build_valid('Employed' => '123')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 517
     end
@@ -74,7 +74,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when education status is invalid' do
       let(:profiles) { [Profile.build_valid('Education' => '223'), Profile.build_valid('Education' => '123')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 518
     end
@@ -82,7 +82,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when marital status is invalid' do
       let(:profiles) { [Profile.build_valid('Married' => '223'), Profile.build_valid('Married' => '123')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 519
     end
@@ -90,7 +90,7 @@ describe CleverTap::Uploader, vcr: true do
     context 'when age is invalid' do
       let(:profiles) { [Profile.build_valid('Age' => 'aa'), Profile.build_valid('Age' => 'aa')] }
 
-      subject { described_class.new(profiles) }
+      subject { described_class.new(profiles, identity_field: :id) }
 
       it_behaves_like 'validation failure', 520
     end
@@ -106,14 +106,14 @@ describe CleverTap::Uploader, vcr: true do
     context 'when the creation date field is missing' do
       let(:profiles) { [Profile.build_valid, Profile.build_valid] }
 
-      subject { described_class.new(profiles, date_field: 'fake_created_at') }
+      subject { described_class.new(profiles, identity_field: :id, date_field: 'fake_created_at') }
 
       it_behaves_like 'validation failure', 525
     end
 
     context 'with invalid credentials' do
       let(:client) { CleverTap::Client.new('fake-id', 'fake-pass') }
-      subject { described_class.new([Profile.build_valid]) }
+      subject { described_class.new([Profile.build_valid], identity_field: :id) }
 
       it 'failed to upload the profiles' do
         result = subject.call(client)
