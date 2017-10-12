@@ -29,7 +29,7 @@ class CleverTap
     end
 
     def success
-      errors.empty?
+      unprocessed.empty?
     end
   end
 end
