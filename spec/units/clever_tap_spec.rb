@@ -66,4 +66,23 @@ RSpec.describe CleverTap do
       expect(clever_tap.client.object_id).to eq(id)
     end
   end
+
+  describe '.config' do
+    let(:identity_field) { 'ID' }
+    let(:account_id) { 'ABC1234' }
+    let(:account_passcode) { 'AcCPasScoDe123' }
+    let(:remove_identity) { true }
+
+    it 'sets config variables' do
+      described_class.setup do |config|
+        config.identity_field = identity_field
+        config.account_id = account_id
+        config.account_passcode = account_passcode
+      end
+
+      expect(described_class.identity_field).to eq identity_field
+      expect(described_class.account_id).to eq account_id
+      expect(described_class.account_passcode).to eq account_passcode
+    end
+  end
 end

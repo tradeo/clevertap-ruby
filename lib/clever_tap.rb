@@ -2,13 +2,30 @@ require 'json'
 
 require 'clever_tap/config'
 require 'clever_tap/client'
+require 'clever_tap/entity'
+require 'clever_tap/event'
+require 'clever_tap/profile'
 require 'clever_tap/uploader'
+require 'clever_tap/response'
 require 'clever_tap/successful_response'
 require 'clever_tap/failed_response'
 
 # the main module of the system
 class CleverTap
   attr_reader :config
+
+  class << self
+    # Never instantiated.  Variables are stored in the singleton_class.
+    private_class_method :new
+
+    attr_accessor :identity_field
+    attr_accessor :account_id
+    attr_accessor :account_passcode
+
+    def setup
+      yield(self)
+    end
+  end
 
   def initialize(**params)
     @config = Config.new(params)
