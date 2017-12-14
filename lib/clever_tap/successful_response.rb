@@ -12,12 +12,7 @@ class CleverTap
     end
 
     def errors
-      # TODO: handle JSON::ParserError
-      unprocessed.map do |response|
-        response.merge(
-          'record' => JSON.parse(response['record'])
-        )
-      end
+      unprocessed
     end
 
     def status
