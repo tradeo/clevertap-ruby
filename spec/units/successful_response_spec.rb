@@ -80,22 +80,13 @@ describe CleverTap::SuccessfulResponse do
 
     context 'with partial status' do
       include_context 'partial state'
-
-      it do
-        expect(subject.errors).to match_array(
-          records.map { |r| { 'record' => r } }
-        )
-      end
+      it { expect(subject.errors).to all(include('record')) }
     end
 
     context 'with fail status' do
       include_context 'fail state'
 
-      it do
-        expect(subject.errors).to match_array(
-          records.map { |r| { 'record' => r } }
-        )
-      end
+      it { expect(subject.errors).to all(include('record')) }
     end
   end
 

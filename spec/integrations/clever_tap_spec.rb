@@ -21,13 +21,14 @@ RSpec.describe 'Clever Tap integration', vcr: true do
     context 'when is invalid' do
       let(:profile) { Profile.build_valid('Email' => '$$$$$') }
 
-      it 'fail' do
+      it 'fails' do
         response = clever_tap.upload_profile(profile)
 
         aggregate_failures do
           expect(response.status).to eq('fail')
-          expect(response.errors.tap { |a, *_| a.delete('error') }).to contain_exactly(
-            a_hash_including('status' => 'fail', 'record' => a_hash_including('identity' => profile['identity'].to_s))
+          expect(response.errors).to all(be_a(Hash))
+          expect(response.errors).to all(
+            include('status', 'code', 'error', 'record')
           )
         end
       end
@@ -40,16 +41,14 @@ RSpec.describe 'Clever Tap integration', vcr: true do
       let(:invalid_profile) { Profile.build_valid('Email' => '$$$$$') }
       let(:profiles) { [valid_profile, invalid_profile] }
 
-      it 'partial succeed' do
+      it 'partially succeds' do
         response = clever_tap.upload_profiles(profiles)
 
         aggregate_failures do
-          expect(response.status).to eq('partial')
-          expect(response.errors).to contain_exactly(
-            a_hash_including(
-              'status' => 'fail',
-              'record' => a_hash_including('identity' => invalid_profile['identity'].to_s)
-            )
+          expect(response.status).to eq('fail')
+          expect(response.errors).to all(be_a(Hash))
+          expect(response.errors).to all(
+            include('status', 'code', 'error', 'record')
           )
         end
       end
