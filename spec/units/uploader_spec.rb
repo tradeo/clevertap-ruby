@@ -20,7 +20,7 @@ end
 
 describe CleverTap::Uploader, vcr: true do
   describe '#call' do
-    let(:profile_properties) { [:id, :created_at, :full_name, :last_name, :bta] }
+    let(:profile_properties) { %i[id created_at full_name last_name bta] }
     let(:client) { CleverTap::Client.new(AUTH_ACCOUNT_ID, AUTH_PASSCODE) }
 
     context 'with valid data' do
