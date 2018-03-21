@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'Clever Tap integration', vcr: true do
+RSpec.describe CleverTap, vcr: true do
   # NOTE: clear mutations in CleverTap config
   subject(:clever_tap) { CleverTap.new(account_id: AUTH_ACCOUNT_ID, passcode: AUTH_PASSCODE) }
 
