@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":"555","ts":1508483325,"type":"event","evtData":{"ID":555,"mobile":true},"evtName":"register"}]}'
+      string: '{"d":[{"identity":"555","ts":1521649275,"type":"event","evtData":{"ID":555,"mobile":true},"evtName":"register"}]}'
     headers:
       Content-Type:
       - application/json
@@ -14,11 +14,11 @@ http_interactions:
       X-CleverTap-Passcode:
       - fake_passcode
       User-Agent:
-      - Faraday v0.11.0
+      - Faraday v0.14.0
   response:
     status:
       code: 200
-      message: 
+      message: OK
     headers:
       content-type:
       - application/json;charset=utf-8
@@ -30,5 +30,5 @@ http_interactions:
       encoding: UTF-8
       string: '{ "status" : "success" , "processed" : 1 , "unprocessed" : [ ]}'
     http_version: 
-  recorded_at: Fri, 20 Oct 2017 07:08:45 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Wed, 21 Mar 2018 16:21:15 GMT
+recorded_with: VCR 4.0.0

@@ -14,24 +14,25 @@ http_interactions:
       X-CleverTap-Passcode:
       - fake_passcode
       User-Agent:
-      - Faraday v0.11.0
+      - Faraday v0.14.0
   response:
     status:
       code: 200
-      message: 
+      message: OK
     headers:
       content-type:
       - application/json;charset=utf-8
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '323'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '{ "status" : "success" , "processed" : 0 , "unprocessed" : [ { "{ \"identity\"
-        : \"1414\" , \"type\" : \"profile\" , \"profileData\" : { \"ID\" : \"1414\"
-        , \"Name\" : \"John\" , \"Phone\" : \"+44+441234\"}}" : "Profile data is incorrect.
-        Phone number is not valid.Skipped record number : 1"}]}'
+      string: '{ "status" : "fail" , "processed" : 0 , "unprocessed" : [ { "status"
+        : "fail" , "code" : 516 , "error" : "Profile data is incorrect. Phone number
+        is not valid.Skipped record number : 1" , "record" : { "identity" : "1414"
+        , "type" : "profile" , "profileData" : { "ID" : "1414" , "Name" : "John" ,
+        "Phone" : "+44+441234"}}}]}'
     http_version: 
-  recorded_at: Thu, 19 Oct 2017 10:15:10 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Wed, 21 Mar 2018 16:21:18 GMT
+recorded_with: VCR 4.0.0
