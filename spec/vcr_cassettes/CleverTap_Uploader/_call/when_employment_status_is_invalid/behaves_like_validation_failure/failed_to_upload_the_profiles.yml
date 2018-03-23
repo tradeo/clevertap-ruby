@@ -5,9 +5,9 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":12,"ts":1488816780,"type":"profile","profileData":{"identity":12,"created_at":"2017-03-06
-        18:13:00 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"223","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":13,"ts":1488816780,"type":"profile","profileData":{"identity":13,"created_at":"2017-03-06
-        18:13:00 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"123","Education":"Graduate","Married":"Y","Age":"18"}}]}'
+      string: '{"d":[{"identity":"7","ts":1521649266,"type":"profile","profileData":{"identity":7,"created_at":"2018-03-21
+        18:21:06 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"223","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"8","ts":1521649266,"type":"profile","profileData":{"identity":8,"created_at":"2018-03-21
+        18:21:06 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"123","Education":"Graduate","Married":"Y","Age":"18"}}]}'
     headers:
       Content-Type:
       - application/json
@@ -16,36 +16,33 @@ http_interactions:
       X-CleverTap-Passcode:
       - fake_passcode
       User-Agent:
-      - Faraday v0.11.0
+      - Faraday v0.14.0
   response:
     status:
       code: 200
-      message: 
+      message: OK
     headers:
       content-type:
       - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding, User-Agent
       content-length:
-      - '359'
+      - '981'
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
-      string: '{ "status" : "success" , "processed" : 0 , "unprocessed" : [ { "status"
+      encoding: UTF-8
+      string: '{ "status" : "fail" , "processed" : 0 , "unprocessed" : [ { "status"
         : "fail" , "code" : 517 , "error" : "Profile data is incorrect. Employed needs
-        to be Y/N.Skipped record number : 1" , "record" : "{ \"identity\" : 12 , \"ts\"
-        : 1488816780 , \"type\" : \"profile\" , \"profileData\" : { \"identity\" :
-        12 , \"created_at\" : \"2017-03-06 18:13:00 +0200\" , \"Name\" : \"John Rush\"
-        , \"Email\" : \"example@gmail.com\" , \"Gender\" : \"M\" , \"Phone\" : 35922333232
-        , \"Employed\" : \"223\" , \"Education\" : \"Graduate\" , \"Married\" : \"Y\"
-        , \"Age\" : \"18\"}}"} , { "status" : "fail" , "code" : 517 , "error" : "Profile
-        data is incorrect. Employed needs to be Y/N.Skipped record number : 2" , "record"
-        : "{ \"identity\" : 13 , \"ts\" : 1488816780 , \"type\" : \"profile\" , \"profileData\"
-        : { \"identity\" : 13 , \"created_at\" : \"2017-03-06 18:13:00 +0200\" , \"Name\"
-        : \"John Rush\" , \"Email\" : \"example@gmail.com\" , \"Gender\" : \"M\" ,
-        \"Phone\" : 35922333232 , \"Employed\" : \"123\" , \"Education\" : \"Graduate\"
-        , \"Married\" : \"Y\" , \"Age\" : \"18\"}}"}]}'
+        to be Y/N.Skipped record number : 1" , "record" : { "identity" : "7" , "ts"
+        : 1521649266 , "type" : "profile" , "profileData" : { "identity" : 7 , "created_at"
+        : "2018-03-21 18:21:06 +0200" , "Name" : "John Rush" , "Email" : "example@gmail.com"
+        , "Gender" : "M" , "Phone" : 35922333232 , "Employed" : "223" , "Education"
+        : "Graduate" , "Married" : "Y" , "Age" : "18"}}} , { "status" : "fail" , "code"
+        : 517 , "error" : "Profile data is incorrect. Employed needs to be Y/N.Skipped
+        record number : 2" , "record" : { "identity" : "8" , "ts" : 1521649266 , "type"
+        : "profile" , "profileData" : { "identity" : 8 , "created_at" : "2018-03-21
+        18:21:06 +0200" , "Name" : "John Rush" , "Email" : "example@gmail.com" , "Gender"
+        : "M" , "Phone" : 35922333232 , "Employed" : "123" , "Education" : "Graduate"
+        , "Married" : "Y" , "Age" : "18"}}}]}'
     http_version: 
-  recorded_at: Mon, 06 Mar 2017 16:13:00 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Wed, 21 Mar 2018 16:21:06 GMT
+recorded_with: VCR 4.0.0

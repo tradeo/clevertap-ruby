@@ -5,9 +5,9 @@ http_interactions:
     uri: https://api.clevertap.com/1/upload
     body:
       encoding: UTF-8
-      string: '{"d":[{"identity":"3","ts":1521394095,"type":"profile","profileData":{"identity":3,"created_at":"2018-03-18
-        19:28:15 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"4","ts":1521394095,"type":"profile","profileData":{"identity":4,"created_at":"2018-03-18
-        19:28:15 +0200","Name":"John Rush","Email":"$$$$$","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
+      string: '{"d":[{"identity":"3","ts":1521649274,"type":"profile","profileData":{"identity":3,"created_at":"2018-03-21
+        18:21:14 +0200","Name":"John Rush","Email":"example@gmail.com","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}},{"identity":"4","ts":1521649274,"type":"profile","profileData":{"identity":4,"created_at":"2018-03-21
+        18:21:14 +0200","Name":"John Rush","Email":"$$$$$","Gender":"M","Phone":"+35922333232","Employed":"Y","Education":"Graduate","Married":"Y","Age":"18"}}]}'
     headers:
       Content-Type:
       - application/json
@@ -16,22 +16,27 @@ http_interactions:
       X-CleverTap-Passcode:
       - fake_passcode
       User-Agent:
-      - Faraday v0.11.0
+      - Faraday v0.14.0
   response:
     status:
-      code: 401
-      message: 
+      code: 200
+      message: OK
     headers:
       content-type:
       - application/json;charset=utf-8
       content-length:
-      - '73'
+      - '505'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '{ "status" : "fail" , "error" : "Account ID is not valid" , "code"
-        : 401}'
+      string: '{ "status" : "partial" , "processed" : 1 , "unprocessed" : [ { "status"
+        : "fail" , "code" : 515 , "error" : "Profile data is incorrect. Email is not
+        valid.Skipped record number : 2" , "record" : { "identity" : "4" , "ts" :
+        1521649274 , "type" : "profile" , "profileData" : { "identity" : 4 , "created_at"
+        : "2018-03-21 18:21:14 +0200" , "Name" : "John Rush" , "Email" : "$$$$$" ,
+        "Gender" : "M" , "Phone" : "+35922333232" , "Employed" : "Y" , "Education"
+        : "Graduate" , "Married" : "Y" , "Age" : "18"}}}]}'
     http_version: 
-  recorded_at: Sun, 18 Mar 2018 17:28:15 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Wed, 21 Mar 2018 16:21:15 GMT
+recorded_with: VCR 4.0.0

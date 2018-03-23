@@ -9,7 +9,7 @@ shared_examples_for 'validation failure' do |expected_code|
       expect(result.success?).to be_truthy
       expect(result.status).to eq(200)
       expect(body).to include('processed' => 0,
-                              'status' => 'success',
+                              'status' => 'fail',
                               'unprocessed' => contain_exactly(
                                 a_hash_including('code' => expected_code),
                                 a_hash_including('code' => expected_code)
@@ -38,13 +38,6 @@ describe CleverTap::Uploader, vcr: true do
           expect(body).to include('processed' => 2, 'unprocessed' => [], 'status' => 'success')
         end
       end
-    end
-
-    context 'when the gender is invalid' do
-      let(:profiles) { [Profile.build_valid('Gender' => 'GG'), Profile.build_valid('Gender' => 'GG')] }
-      subject { described_class.new(profiles, identity_field: 'identity') }
-
-      it_behaves_like 'validation failure', 514
     end
 
     context 'when email is invalid' do

@@ -45,7 +45,7 @@ RSpec.describe CleverTap, vcr: true do
         response = clever_tap.upload_profiles(profiles)
 
         aggregate_failures do
-          expect(response.status).to eq('fail')
+          expect(response.status).to eq('partial')
           expect(response.errors).to all(be_a(Hash))
           expect(response.errors).to all(
             include('status', 'code', 'error', 'record')
