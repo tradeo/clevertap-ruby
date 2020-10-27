@@ -7,7 +7,7 @@ class CleverTap
 
   class MissingIdentityError < RuntimeError
     def message
-      "Couldn'n find `identity` in CleverTap.config or `data`"
+      "Couldn't find `identity` in CleverTap.config or `data`"
     end
   end
 
@@ -24,6 +24,7 @@ class CleverTap
         self::UPLOAD_LIMIT
       end
 
+      # @return [Boolean]
       def all_same_type?(items)
         items.all? { |i| i.class == self }
       end
@@ -35,51 +36,63 @@ class CleverTap
       @timestamp = choose_timestamp(args)
     end
 
+    # @return [Hash]
     def to_h
-      put_identity_pair
-        .merge(put_timestamp_pair)
-        .merge(put_type_pair)
-        .merge(put_data)
+      identity_hash
+        .merge(timestamp_hash)
+        .merge(type_hash)
+        .merge(data_hash)
     end
 
     private
 
-    def put_identity_pair
+    # @return [Hash]
+    def identity_hash
       raise NoDataError if @data.to_h.empty?
       raise MissingIdentityError if @identity == '' || @data[@identity].nil?
       return { @identity => @data[@identity].to_s } if allowed?(@identity)
+
       { IDENTITY_STRING => @data[@identity].to_s }
     end
 
-    def put_timestamp_pair
+    # @return [Hash]
+    def timestamp_hash
       return {} unless @timestamp
+
       { TIMESTAMP_STRING => @timestamp }
     end
 
-    def put_type_pair
+    # @return [Hash]
+    def type_hash
       { TYPE_KEY_STRING => self.class::TYPE_VALUE_STRING }
     end
 
-    def put_data
+    # @return [Hash]
+    def data_hash
       raise NoDataError if @data.to_h.empty?
+
       @data.delete(@identity) if allowed?(@identity)
       {
         self.class::DATA_STRING => @data
       }
     end
 
+    # @return [String]
     def choose_identity(args)
       identity = args[:identity].to_s
-
       return identity if allowed?(identity) && @data.to_h.key?(identity)
+
       CleverTap.identity_field.to_s
     end
 
+    # @return [Integer, nil]
     def choose_timestamp(args)
       return args[:custom_timestamp].to_i if args[:custom_timestamp]
-      return @data.delete(args[:timestamp_field].to_s).to_i if args[:timestamp_field]
+
+      @data.delete(args[:timestamp_field].to_s).to_i if args[:timestamp_field]
     end
 
+    # @return [Boolean]
     def allowed?(identity)
       ALLOWED_IDENTITIES.include?(identity)
     end

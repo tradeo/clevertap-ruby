@@ -1,0 +1,178 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"FBID":["a1","a2","a3","a4"]},"tag_group":"mytaggroup","respect_frequency_caps":false,"content":{"body":"Smsbody"}}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 22 Oct 2020 16:11:28 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 22 Oct 2020 16:11:28 GMT
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"FBID":["a5"],"Email":["b1","b2","b3"]},"tag_group":"mytaggroup","respect_frequency_caps":false,"content":{"body":"Smsbody"}}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 22 Oct 2020 16:11:29 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 22 Oct 2020 16:11:29 GMT
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"Identity":["c1","c2","c3","c4"]},"tag_group":"mytaggroup","respect_frequency_caps":false,"content":{"body":"Smsbody"}}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 22 Oct 2020 16:11:30 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 22 Oct 2020 16:11:30 GMT
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"Identity":["c5"],"objectId":["d1","d2","d3"]},"tag_group":"mytaggroup","respect_frequency_caps":false,"content":{"body":"Smsbody"}}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 22 Oct 2020 16:11:31 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 22 Oct 2020 16:11:31 GMT
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"objectId":["d4","d5"]},"tag_group":"mytaggroup","respect_frequency_caps":false,"content":{"body":"Smsbody"}}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 22 Oct 2020 16:11:31 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 22 Oct 2020 16:11:31 GMT
+recorded_with: VCR 5.1.0

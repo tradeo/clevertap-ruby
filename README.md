@@ -134,6 +134,170 @@ clevertap.upload(event)
 clevertap.upload(events) # Works as well with [CleverTap::Event]
 ```
 
+### Create a campaign
+CleverTap documentation: https://developer.clevertap.com/docs/create-campaign-api
+
+```ruby
+client = CleverTap::Client.new(AUTH_ACCOUNT_ID, AUTH_PASSCODE)
+
+## SMS
+campaign = CleverTap::Campaign::Sms.new(
+  to: { 'Email' => ['john@doe.com'] },
+  tag_group: 'mytaggroup',
+  respect_frequency_caps: false,
+  content: { 'body' => 'Smsbody' }
+)
+
+client.create_campaign(campaign)
+```
+
+
+<details>
+  <summary>Web push example</summary>
+  
+  ```ruby
+  ## Web push
+  campaign = CleverTap::Campaign::WebPush.new(
+    to: {
+      'FBID' => %w[102029292929388 114342342453463],
+      'Email' =>  ['john@doe.com', 'jane@doe.com'],
+      'Identity' => ['JohnDoe'],
+      'objectId' => [
+        '_asdnkansdjknaskdjnasjkndja',
+        '-adffajjdfoaiaefiohnefwprjf'
+      ]
+    },
+    tag_group: 'my tag group',
+    campaign_id: 1_000_000_043,
+    respect_frequency_caps: false,
+    content: {
+      'title' => 'Hi!',
+      'body' => 'How are you doing today?',
+      'platform_specific' => {  # Optional
+        'safari' => {
+          'deep_link' => 'https://apple.com',
+          'ttl' => 10
+        },
+        'chrome' => {
+          'image' => 'https://www.exampleImage.com',
+          'icon' => 'https://www.exampleIcon.com',
+          'deep_link' => ' https://google.co',
+          'ttl' => 10,
+          'require_interaction' => true,
+          'cta_title1' => 'title',
+          'cta_link1' => 'http://www.example2.com',
+          'cta_iconlink1' => 'https://www.exampleIcon2.com'
+        },
+        'firefox' => {
+          'icon' => 'https://www.exampleIcon.com',
+          'deep_link' => 'https://mozilla.org',
+          'ttl' => 10
+        }
+      }
+    }
+  )
+
+  client.create_campaign(campaign)
+  ```
+</details>
+
+
+<details>
+  <summary>Push example</summary>
+  
+  ```ruby
+  ## Push
+  campaign = CleverTap::Campaign::Push.new(
+    to: {
+      'FBID' => %w[
+        102029292929388
+        114342342453463
+      ],
+      'GPID' => [
+        '1928288389299292'
+      ],
+      'Email' => [
+        'john@doe.com',
+        'jane@doe.com'
+      ],
+      'Identity' => [
+        'JohnDoe'
+      ],
+      'objectId' => [
+        '_asdnkansdjknaskdjnasjkndja',
+        '-adffajjdfoaiaefiohnefwprjf'
+      ]
+    },
+    tag_group: 'mytaggroup',
+    respect_frequency_caps: false,
+    content: {
+      'title' => 'Welcome',
+      'body' => 'Smsbody',
+      'platform_specific' => { # Optional
+        'ios' => {
+          'deep_link' => 'example.com',
+          'sound_file' => 'example.caf',
+          'category' => 'notification category',
+          'badge_count' => 1,
+          'key' => 'value_ios'
+        },
+        'android' => {
+          'background_image' => 'http://example.jpg',
+          'default_sound' => true,
+          'deep_link' => 'example.com',
+          'large_icon' => 'http://example.png',
+          'key' => 'value_android',
+          'wzrk_cid' => 'engagement'
+        }
+      }
+    }
+  )
+
+  client.create_campaign(campaign)
+  ```
+</details>
+
+
+<details>
+  <summary>Email example</summary>
+  
+  ```ruby
+  ## Email
+  campaign = CleverTap::Campaign::Email.new(
+    to: {
+      'FBID' => %w[
+        102029292929388
+        114342342453463
+      ],
+      'GPID' => [
+        '1928288389299292'
+      ],
+      'Email' => [
+        'john@doe.com',
+        'jane@doe.com'
+      ],
+      'Identity' => [
+        'JohnDoe'
+      ],
+      'objectId' => [
+        '_asdnkansdjknaskdjnasjkndja',
+        '-adffajjdfoaiaefiohnefwprjf'
+      ]
+    },
+    tag_group: 'my tag group',
+    respect_frequency_caps: false,
+    content: {
+      'subject' => 'Welcome',
+      'body' => '<div>Your HTML content for the email</div>',
+      'sender_name' => 'CleverTap'
+    }
+  )
+
+  client.create_campaign(campaign)
+  ```
+</details>
+
+
 ### Send requests as *Dry Run*
 
 Passing parameter `dry_run: true` to upload methods you can test the data submitted for a validation errors.

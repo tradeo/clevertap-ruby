@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/push.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"Email":["john@doe.com","jane@doe.com"]},"tag_group":"mytaggroup","content":{"title":"Welcome","body":"Smsbody","platform_specific":{"ios":{"deep_link":"example.com","sound_file":"example.caf","category":"notification
+        category","badge_count":1,"key":"value_ios"},"android":{"background_image":"http://example.jpg","default_sound":true,"deep_link":"example.com","large_icon":"http://example.png","key":"value_android"}}},"respect_frequency_caps":false}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Thu, 15 Oct 2020 22:29:58 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{ "status" : "fail" , "error" : "Notification channel is required for
+        devices having Android 8.0 or above" , "code" : 9}'
+    http_version:
+  recorded_at: Thu, 15 Oct 2020 22:29:58 GMT
+recorded_with: VCR 5.1.0

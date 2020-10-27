@@ -276,4 +276,222 @@ describe CleverTap::Client, vcr: true do
       end
     end
   end
+
+  describe '#receivers_chunks' do
+    before do
+      stub_const('CleverTap::Campaign::MAX_USERS_PER_CAMPAIGN', 4)
+    end
+
+    subject { described_class.new(AUTH_ACCOUNT_ID, AUTH_PASSCODE) }
+
+    context 'when the number of targets is greater than MAX_USERS_PER_CAMPAIGN' do
+      context 'the number of targets is not divisible by limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1 a2 a3 a4 a5],
+              'Email' => %w[b1 b2 b3],
+              'Identity' => %w[c1 c2 c3 c4 c5],
+              'objectId' => %w[d1 d2 d3 d4 d5]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should yield 5 times' do
+          expect { |b| subject.send(:receivers_chunks, campaign, &b) }.to yield_control.exactly(5).times
+        end
+      end
+
+      context 'just an identity and it does not exeed the limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1 a2 a3]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should yield 1 times' do
+          expect { |b| subject.send(:receivers_chunks, campaign, &b) }.to yield_control.exactly(1).times
+        end
+      end
+
+      context 'the set of identities does not exeed the limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1],
+              'Email' => %w[b1],
+              'Identity' => %w[c1],
+              'objectId' => %w[d1]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should yield 1 times' do
+          expect { |b| subject.send(:receivers_chunks, campaign, &b) }.to yield_control.exactly(1).times
+        end
+      end
+
+      context 'empty targets' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[],
+              'Email' => %w[],
+              'Identity' => %w[],
+              'objectId' => %w[]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should yield 0 times' do
+          expect { |b| subject.send(:receivers_chunks, campaign, &b) }.to yield_control.exactly(0).times
+        end
+      end
+    end
+  end
+
+  describe '#create_campaign' do
+    before do
+      stub_const('CleverTap::Campaign::MAX_USERS_PER_CAMPAIGN', 4)
+    end
+
+    subject { described_class.new(AUTH_ACCOUNT_ID, AUTH_PASSCODE).create_campaign(campaign) }
+
+    context 'when the number of targets is greater than MAX_USERS_PER_CAMPAIGN' do
+      context 'the number of targets is not divisible by limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1 a2 a3 a4 a5],
+              'Email' => %w[b1 b2 b3],
+              'Identity' => %w[c1 c2 c3 c4 c5],
+              'objectId' => %w[d1 d2 d3 d4 d5]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should return an array of 5 responses' do
+          expect(subject.size).to eq 5
+          subject.each do |result|
+            body = JSON.parse(result.body)
+            expect(result.success?).to be_truthy
+            expect(result.status).to eq(200)
+            expect(body).to include('message' => 'Added to queue for processing', 'status' => 'success')
+          end
+        end
+      end
+
+      context 'just an identity and it does not exeed the limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1 a2 a3]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should return an array of 1 responses ' do
+          expect(subject.size).to eq 1
+          subject.each do |result|
+            body = JSON.parse(result.body)
+            expect(result.success?).to be_truthy
+            expect(result.status).to eq(200)
+            expect(body).to include('message' => 'Added to queue for processing', 'status' => 'success')
+          end
+        end
+      end
+
+      context 'the set of identities does not exeed the limit' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[a1],
+              'Email' => %w[b1],
+              'Identity' => %w[c1],
+              'objectId' => %w[d1]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should return an array of 1 responses' do
+          expect(subject.size).to eq 1
+          subject.each do |result|
+            body = JSON.parse(result.body)
+            expect(result.success?).to be_truthy
+            expect(result.status).to eq(200)
+            expect(body).to include('message' => 'Added to queue for processing', 'status' => 'success')
+          end
+        end
+      end
+
+      context 'empty targets' do
+        let(:campaign) do
+          CleverTap::Campaign::Sms.new(
+            to: {
+              'FBID' => %w[],
+              'Email' => %w[],
+              'Identity' => %w[],
+              'objectId' => %w[]
+            },
+            tag_group: 'mytaggroup',
+            respect_frequency_caps: false,
+            content: { 'body' => 'Smsbody' }
+          )
+        end
+
+        it 'should return an empty array' do
+          expect(subject.size).to eq 0
+        end
+      end
+    end
+
+    context 'when the number of targest does not exeed the limit' do
+      let(:campaign) do
+        CleverTap::Campaign::Sms.new(
+          to: {
+            'FBID' => %w[a1],
+            'Email' => %w[b1],
+            'Identity' => %w[c1],
+            'objectId' => %w[d1]
+          },
+          tag_group: 'mytaggroup',
+          respect_frequency_caps: false,
+          content: { 'body' => 'Smsbody' }
+        )
+      end
+
+      it 'should return a single response' do
+        expect(subject.size).to eq 1
+        subject.each do |result|
+          body = JSON.parse(result.body)
+          expect(result.success?).to be_truthy
+          expect(result.status).to eq(200)
+          expect(body).to include('message' => 'Added to queue for processing', 'status' => 'success')
+        end
+      end
+    end
+  end
 end
