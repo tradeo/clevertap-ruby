@@ -2,10 +2,16 @@ require 'json'
 
 require 'clever_tap/config'
 require 'clever_tap/client'
+require 'clever_tap/campaign'
+require 'clever_tap/campaign/sms'
+require 'clever_tap/campaign/web_push'
+require 'clever_tap/campaign/push'
+require 'clever_tap/campaign/email'
 require 'clever_tap/entity'
 require 'clever_tap/event'
 require 'clever_tap/profile'
 require 'clever_tap/uploader'
+require 'clever_tap/campaign_creator'
 require 'clever_tap/response'
 require 'clever_tap/successful_response'
 require 'clever_tap/failed_response'
@@ -64,6 +70,11 @@ class CleverTap
 
   def upload_profile(profile, **options)
     upload_profiles([profile], options)
+  end
+
+  def create_campaign(campaign)
+    response = CampaignCreator.new(campaign).call(client)
+    normalize_response(response, records: [campaign])
   end
 
   private

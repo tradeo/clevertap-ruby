@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.clevertap.com/1/send/sms.json
+    body:
+      encoding: UTF-8
+      string: '{"to":{"Email":["john@doe.com"]},"tag_group":"mytaggroup","content":{"body":"Smsbody"},"respect_frequency_caps":false}'
+    headers:
+      Content-Type:
+      - application/json
+      X-CleverTap-Account-Id:
+      - fake_account_id
+      X-CleverTap-Passcode:
+      - fake_passcode
+      User-Agent:
+      - Faraday v0.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 15 Oct 2020 22:29:56 GMT
+      content-type:
+      - application/json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "message" : "Added to queue for processing" , "status" : "success"}'
+    http_version:
+  recorded_at: Thu, 15 Oct 2020 22:29:56 GMT
+recorded_with: VCR 5.1.0

@@ -16,14 +16,17 @@ class CleverTap
       @name = args[:name]
     end
 
+    # @return [Hash]
     def to_h
-      super.merge(put_event_name_pair)
+      super.merge(event_name_hash)
     end
 
     private
 
-    def put_event_name_pair
+    # @return [Hash]
+    def event_name_hash
       raise MissingEventNameError if @name.nil?
+
       { EVENT_NAME_STRING => @name }
     end
   end
