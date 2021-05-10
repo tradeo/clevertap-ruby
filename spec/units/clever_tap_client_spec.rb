@@ -21,10 +21,9 @@ describe CleverTap::Client, vcr: true do
       end
 
       it 'override the default adapter' do
-        handlers = subject.connection.builder.handlers
+        adapter = subject.connection.builder.adapter
 
-        expect(handlers.count).to eq(1)
-        expect(handlers.first).to eq(Faraday::Adapter::Test)
+        expect(adapter).to eq(Faraday::Adapter::Test)
       end
     end
 
@@ -32,10 +31,9 @@ describe CleverTap::Client, vcr: true do
       subject { described_class.new('123456', 'passcode') }
 
       it 'use Net::HTTP adapter' do
-        handlers = subject.connection.builder.handlers
+        adapter = subject.connection.builder.adapter
 
-        expect(handlers.count).to eq(1)
-        expect(handlers.first).to eq(Faraday::Adapter::NetHttp)
+        expect(adapter).to eq(Faraday::Adapter::NetHttp)
       end
     end
   end
